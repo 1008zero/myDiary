@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  addDiaryViewController.swift
 //  myDiary
 //
 //  Created by Ki Hyun on 2022/02/08.
@@ -7,13 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class addDiaryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.navigationItem.title = "Write Diary"
+        
     }
-
-
 }
-
