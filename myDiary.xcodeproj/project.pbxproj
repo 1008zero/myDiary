@@ -17,6 +17,7 @@
 		DA60135A27B27A8400808944 /* addDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60135927B27A8400808944 /* addDiaryViewController.swift */; };
 		DA60137E27B3BDFB00808944 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60137D27B3BDFB00808944 /* ColorExtension.swift */; };
 		DA60138027B3C4FF00808944 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60137F27B3C4FF00808944 /* TableViewCell.swift */; };
+		DA60138227B4E9BB00808944 /* detailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60138127B4E9BB00808944 /* detailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		DA60135927B27A8400808944 /* addDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDiaryViewController.swift; sourceTree = "<group>"; };
 		DA60137D27B3BDFB00808944 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		DA60137F27B3C4FF00808944 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		DA60138127B4E9BB00808944 /* detailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				DA60135027B2760200808944 /* homeViewController.swift */,
 				DA60137F27B3C4FF00808944 /* TableViewCell.swift */,
 				DA60135927B27A8400808944 /* addDiaryViewController.swift */,
+				DA60138127B4E9BB00808944 /* detailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				DA60133F27B273D700808944 /* SceneDelegate.swift in Sources */,
 				DA60138027B3C4FF00808944 /* TableViewCell.swift in Sources */,
 				DA60135827B2797D00808944 /* Model.swift in Sources */,
+				DA60138227B4E9BB00808944 /* detailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

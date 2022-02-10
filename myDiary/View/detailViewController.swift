@@ -1,15 +1,15 @@
 //
-//  addDiaryViewController.swift
+//  detaliViewController.swift
 //  myDiary
 //
-//  Created by Ki Hyun on 2022/02/08.
+//  Created by Ki Hyun on 2022/02/10.
 //
 
 import UIKit
 import SnapKit
 import RealmSwift
 
-class addDiaryViewController: UIViewController {
+class detailViewController: UIViewController {
     let realm = try! Realm()
     
     let addTitle = UITextField()
@@ -19,7 +19,7 @@ class addDiaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Write Diary"
+        self.navigationItem.title = "Detail Diary"
         setupValue()
         setUpView()
         setConstraints()
@@ -31,7 +31,6 @@ class addDiaryViewController: UIViewController {
     
     // MARK: - func
     func setupValue(){
-        addTitle.delegate = self
         addTitle.placeholder = "제목"
         addTitle.font = UIFont.boldSystemFont(ofSize: 30)
         addContents.backgroundColor = .bgColor
@@ -67,13 +66,4 @@ class addDiaryViewController: UIViewController {
         }
     }
 
-}
-
-extension addDiaryViewController : UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if(textField.isEqual(self.addTitle)){
-            self.addContents.becomeFirstResponder()
-        }
-        return true
-    }
 }
