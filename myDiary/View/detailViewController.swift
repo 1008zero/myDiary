@@ -7,10 +7,10 @@
 
 import UIKit
 import SnapKit
-import RealmSwift
 
 class detailViewController: UIViewController {
-    let realm = try! Realm()
+    var index = 0
+    var VM = DiaryViewModel()
     
     let addTitle = UITextField()
     let addContents = UITextView()
@@ -57,13 +57,22 @@ class detailViewController: UIViewController {
     }
     
     @objc func saveBtnTouch(_ button: UIButton) {
+        let alert1 = UIAlertController(title: "메모 저장", message: "저장을 하시겠습니까?", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default, handler: save)
+        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
+        alert1.addAction(ok)
+        alert1.addAction(cancle)
+        present(alert1, animated: true, completion: nil)
+    }
+    
+    func save(alert: UIAlertAction!){
         let diaryData = DiaryModel()
         diaryData.title = addTitle.text?.count == 0 ? "" : addTitle.text!
         diaryData.contents = addContents.text?.count == 0 ? "" : addContents.text!
         diaryData.date = Date()
-        try! realm.write{
-            realm.add(diaryData)
-        }
+        VM.delDiary(index)
+        VM.addDiary(diaryData)
+        self.navigationController?.popViewController(animated: true)
     }
 
 }

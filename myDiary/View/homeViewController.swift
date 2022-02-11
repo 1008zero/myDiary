@@ -10,13 +10,15 @@ import SnapKit
 import RealmSwift
 
 class homeViewController: UIViewController {
-    let realm = try! Realm()
-    var diaryDatas : Results<DiaryModel>?
-    
+    var VM = DiaryViewModel()
+    var notificationToken: NotificationToken?
+
     let tableview = UITableView()
     let addBtn = UIButton()
-    lazy var leftButton: UIBarButtonItem = { let button = UIBarButtonItem(title: "setting", style: .plain, target: self, action: #selector(addBtnTouch)); button.tag = 1; return button }()
-    lazy var rightButton: UIBarButtonItem = { let button = UIBarButtonItem(barButtonSystemItem: .edit , target: self, action: #selector(addBtnTouch)); button.tag = 2; return button }()
+    
+//    lazy var leftButton: UIBarButtonItem = { let button = UIBarButtonItem(title: "setting", style: .plain, target: self, action: #selector(addBtnTouch)); button.tag = 1; return button }()
+//    
+//    lazy var rightButton: UIBarButtonItem = { let button = UIBarButtonItem(barButtonSystemItem: .edit , target: self, action: #selector(addBtnTouch)); button.tag = 2; return button }()
 
     
     override func viewDidLoad() {
@@ -25,11 +27,19 @@ class homeViewController: UIViewController {
         setUpView()
         setConstraints()
         
+        notificationToken = VM.diaryDatas?.observe { [unowned self] changes in
+            switch changes {
+            case .initial(_): break
+            case .update(_, deletions: _, insertions: _, modifications: _):
+            self.tableview.reloadData()
+            case .error(_): break
+            }
+        }
+        
     }
     
 // MARK: - VC func
     func setupValue(){
-        diaryDatas = realm.objects(DiaryModel.self)
         addBtn.backgroundColor = .btnColor
         addBtn.layer.cornerRadius = 30
         addBtn.setTitle("+", for: .normal)
@@ -47,8 +57,8 @@ class homeViewController: UIViewController {
     func setUpView(){
         self.view.addSubview(tableview)
         self.view.addSubview(addBtn)
-        self.navigationItem.leftBarButtonItem = self.leftButton
-        self.navigationItem.rightBarButtonItem = self.rightButton
+//        self.navigationItem.leftBarButtonItem = self.leftButton
+//        self.navigationItem.rightBarButtonItem = self.rightButton
     }
     
     func setConstraints(){
@@ -79,24 +89,39 @@ class homeViewController: UIViewController {
 
 // MARK: - extension
 extension homeViewController : UITableViewDelegate{
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = detailViewController()
-        detailVC.addTitle.text = diaryDatas?[indexPath.row].title
-        detailVC.addContents.text = diaryDatas?[indexPath.row].contents
-        self.navigationController?.pushViewController(detailVC, animated: true)
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let index2 = ((VM.diaryDatas?.count)! - 1) - indexPath.row
+            VM.delDiary(index2)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index2 = ((VM.diaryDatas?.count)! - 1) - indexPath.row
+        let detailVC = detailViewController()
+        detailVC.addTitle.text = VM.diaryDatas?[index2].title
+        detailVC.addContents.text = VM.diaryDatas?[index2].contents
+        self.navigationController?.pushViewController(detailVC, animated: true)
+        detailVC.index = index2
+    }
+
 }
 
 extension homeViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return diaryDatas!.count
+        return (VM.diaryDatas?.count)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell else { return UITableViewCell() }
+        let index2 = ((VM.diaryDatas?.count)! - 1) - indexPath.row
         cell.backgroundColor = .bgColor
-        cell.titleLabel.text = diaryDatas?[indexPath.row].title
-        cell.dateLabel.text = DateTypeToString(diaryDatas![indexPath.row].date)
+        cell.titleLabel.text = VM.diaryDatas?[index2].title
+        cell.dateLabel.text = DateTypeToString(VM.diaryDatas![index2].date)
         return cell
     }
     
